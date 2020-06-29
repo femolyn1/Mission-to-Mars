@@ -5,6 +5,7 @@
 ![](https://github.com/femolyn1/Mission-to-Mars/blob/master/Portfolio/Portfolio_3.PNG)
 ![](https://github.com/femolyn1/Mission-to-Mars/blob/master/Portfolio/Portfolio_4.PNG)
 
-## Note: The app folder contains the scraping.py, app.py and index.html files. 
+## Note: 
+The app folder contains the scraping.py, app.py and index.html files. 
 
 
