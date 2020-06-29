@@ -11,6 +11,7 @@
     />
   </head>
   <body>
+
     <div class="container">
       <!-- Add Jumbotron to Header -->
       <div class="jumbotron text-center">
@@ -18,10 +19,22 @@
         <!-- Add a button to activate scraping script -->
         <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data</a></p>
       </div>
+    <div class="container">
+        <!-- Add Jumbotron to Header -->
+        
+        <button id="myButton" class="float-left submit-button" >Home</button>
 
-      <!-- Add section for Mars News -->
+        <script type="text/javascript">
+            document.getElementById("myButton").onclick = function () {
+                location.href = "https://astrogeology.usgs.gov";
+            };
+        </script>
+        </div>
+              
+     
+        <!-- Add section for Mars News -->
       <div class="row" id="mars-news">
-        <div class="col-md-12">
+        <div class="col-lg-12 col-md-8 col-sm-6 ">
           <div class="media">
             <div class="media-body">
               <h2>Latest Mars News</h2>
@@ -34,7 +47,7 @@
 
       <!-- Section for Featured Image and Facts table -->
       <div class="row" id="mars-featured-image">
-        <div class="col-md-8">
+        <div class="col-lg-8 col-md-5 col-sm-4">
           <h2>Featured Mars Image</h2>
 
           <!-- if images is False/None/non-existent, then default to error message -->
@@ -44,15 +57,41 @@
             alt="Responsive image"
           />
         </div>
-
-        <div class="col-md-4">
+        
+        <!-- Section for hemisphere and urls-->
+      <div class="row" id="hemispheres">
+        <div class="col-lg-8 col-md-6 col-sm-6">
+          <h2>Mars Hemispheres</h2>
+          <!-- if images is False/None/non-existent, then default to error message -->
+          
+          {% for dict_item in mars.hemispheres %}
+          <img 
+          src="{{dict_item.img| default ('static/images/error.png',true)}}"
+          class="img-thumbnail"
+          alt = "Responsive image"
+         />  
+          {% endfor %}
+      
+       
+          
+         
+          </div>  
+        </div>
+       
+         <div class="col-lg-5 col-md-4 col-sm-3">
           <!-- Mars Facts -->
           <div class="row" id="mars-facts">
-             <h4>Mars Facts</h4>
+            <table class="table table-bordered table-striped table-hover"></table> 
+             <h2>Mars Facts</h2>
               {{ mars.facts | safe }}   
           </div>
         </div>
       </div>
     </div>
+    <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   </body>
 </html>

@@ -1,4 +1,3 @@
-
 # Import Splinter and BeautifulSoup
 from splinter import Browser
 from bs4 import BeautifulSoup
@@ -17,8 +16,9 @@ def scrape_all():
         "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
+        "hemispheres": hemispheres(browser),
         "last_modified": dt.datetime.now()
-         }
+    }
    browser.quit()
    return data
 
@@ -90,9 +90,341 @@ def mars_facts():
     #Convert dataframe into html format and add bootstrap
     return df.to_html()
 
+def hemispheres(browser):
+    # Visit the Astrogoeology site
+    url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+    browser.visit(url)
+    #parse the html
+    html = browser.html
+    hemp_soup = BeautifulSoup(html, 'html.parser')
+    #Find the title
+    title_elem=hemp_soup.find('div', {'id':'product-section'})
+    items=title_elem.find('div', {'class':'collapsible results'})
+
+    children =items.findChildren('div',{'class':'item'}, recursive=True)
+    
+    hemispheres_image_urls=[]
+    for child in children:
+
+    
+    
+        hemp =child.findChildren('a',recursive=False)[0].attrs['href']
+    
+        url = 'https://astrogeology.usgs.gov'+ hemp
+        
+        browser.visit(url)
+        
+
+        #parse the html
+        html = browser.html
+        child_soup = BeautifulSoup(html, 'html.parser')
+        try:
+            title_elem = child_soup.find("h2",class_="title").get_text()
+    
+            sample_elem = child_soup.find("a", text ="Sample").get("href")
+        except AttributeError:
+            title_elem = None
+            sample_elem = None
+        print(sample_elem)
+        hemispheres_image_urls.append({'title':title_elem,
+                                     'img':sample_elem})
+
+    return hemispheres_image_urls
+        
+   
 if __name__ == "__main__":
     # If running as script, print scraped data
     print(scrape_all())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
